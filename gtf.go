@@ -17,6 +17,11 @@ func recovery() {
 }
 
 var GtfFuncMap = template.FuncMap{
+	"gettitle": func(value string) string {
+		defer recovery()
+		list := strings.Split(value, ".")
+		return list[len(list)-1]
+	},
 	"replace": func(s1 string, s2 string) string {
 		defer recovery()
 
