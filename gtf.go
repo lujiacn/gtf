@@ -1,6 +1,7 @@
 package gtf
 
 import (
+	"encoding/json"
 	"fmt"
 	"html/template"
 	"math"
@@ -17,6 +18,11 @@ func recovery() {
 }
 
 var GtfFuncMap = template.FuncMap{
+	"tojson": func(value interface{}) template.JS {
+		defer recovery()
+		out, _ := json.Marshal(value)
+		return template.JS(string(out))
+	},
 	"gettitle": func(value string) string {
 		defer recovery()
 		list := strings.Split(value, ".")
