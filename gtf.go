@@ -18,6 +18,14 @@ func recovery() {
 }
 
 var GtfFuncMap = template.FuncMap{
+	"existin": func(list []string, value string) bool {
+		for _, item := range list {
+			if item == value {
+				return true
+			}
+		}
+		return false
+	},
 	"tojson": func(value interface{}) template.JS {
 		defer recovery()
 		out, _ := json.Marshal(value)
