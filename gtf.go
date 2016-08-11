@@ -18,6 +18,12 @@ func recovery() {
 }
 
 var GtfFuncMap = template.FuncMap{
+	"asHTML": func(value string) template.HTML {
+		return template.HTML(value)
+	},
+	"asJS": func(value string) template.JS {
+		return template.JS(value)
+	},
 	"existin": func(list []string, value string) bool {
 		for _, item := range list {
 			if item == value {
