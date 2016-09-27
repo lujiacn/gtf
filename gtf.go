@@ -3,6 +3,7 @@ package gtf
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/lujiacn/timeago"
 	"html/template"
 	"math"
 	"math/rand"
@@ -18,13 +19,20 @@ func recovery() {
 }
 
 var GtfFuncMap = template.FuncMap{
+	"timeago": func(value time.Time) string {
+		defer recover()
+		return timeago.English.Format(value)
+	},
 	"asHTML": func(value string) template.HTML {
+		defer recovery()
 		return template.HTML(value)
 	},
 	"asJS": func(value string) template.JS {
+		defer recovery()
 		return template.JS(value)
 	},
 	"existin": func(list []string, value string) bool {
+		defer recovery()
 		for _, item := range list {
 			if item == value {
 				return true
