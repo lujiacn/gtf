@@ -22,13 +22,14 @@ func recovery() {
 
 var GtfFuncMap = template.FuncMap{
 	"markdown": func(value string) template.HTML {
+		defer recovery()
 		byteValue := []byte(value)
 		byteOutput := blackfriday.MarkdownCommon(byteValue)
 
 		return template.HTML(string(byteOutput))
 	},
 	"timeago": func(value time.Time) string {
-		defer recover()
+		defer recovery()
 		return timeago.English.Format(value)
 	},
 	"asHTML": func(value string) template.HTML {
