@@ -3,7 +3,6 @@ package gtf
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/lujiacn/timeago"
 	"html/template"
 	"math"
 	"math/rand"
@@ -11,6 +10,9 @@ import (
 	"reflect"
 	"strings"
 	"time"
+
+	"github.com/lujiacn/timeago"
+	"github.com/russross/blackfriday"
 )
 
 // recovery will silently swallow all unexpected panics.
@@ -19,6 +21,12 @@ func recovery() {
 }
 
 var GtfFuncMap = template.FuncMap{
+	"markdown": func(value string) template.HTML {
+		byteValue := []byte(value)
+		byteOutput := blackfriday.MarkdownCommon(byteValue)
+
+		return template.HTML(string(byteOutput))
+	},
 	"timeago": func(value time.Time) string {
 		defer recover()
 		return timeago.English.Format(value)
