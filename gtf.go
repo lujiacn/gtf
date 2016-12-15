@@ -21,6 +21,17 @@ func recovery() {
 }
 
 var GtfFuncMap = template.FuncMap{
+	"renderTime": func(value interface{}) string {
+		defer recovery()
+		switch value.(type) {
+		case time.Time:
+			startTime := value.(time.Time)
+			loading := time.Now().Sub(startTime).Seconds() * 1000
+			return fmt.Sprintf("%.2fms", loading)
+		default:
+			return ""
+		}
+	},
 	"markdown": func(value string) template.HTML {
 		defer recovery()
 		byteValue := []byte(value)
