@@ -21,6 +21,14 @@ func recovery() {
 }
 
 var GtfFuncMap = template.FuncMap{
+	"isblank": func(value string) bool {
+		defer recovery()
+		s := strings.TrimSpace(value)
+		if s == "" {
+			return true
+		}
+		return false
+	},
 	"renderTime": func(value interface{}) string {
 		defer recovery()
 		switch value.(type) {
