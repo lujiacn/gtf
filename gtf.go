@@ -11,6 +11,7 @@ import (
 	"strings"
 	"time"
 
+	humanize "github.com/dustin/go-humanize"
 	"github.com/lujiacn/timeago"
 	"github.com/russross/blackfriday"
 )
@@ -21,6 +22,24 @@ func recovery() {
 }
 
 var GtfFuncMap = template.FuncMap{
+	"istrue": func(value interface{}) bool {
+		//for *bool type
+		v := value.(*bool)
+		if v == nil || *v == false {
+			return false
+		}
+		return true
+	},
+	"humanizeSize": func(size interface{}) string {
+		switch v := size.(type) {
+		case float64:
+			out := uint64(int64(v))
+			return humanize.Bytes(out)
+		case int64:
+			return humanize.Bytes(uint64(v))
+		}
+		return "NA"
+	},
 	"isblank": func(value string) bool {
 		defer recovery()
 		s := strings.TrimSpace(value)
