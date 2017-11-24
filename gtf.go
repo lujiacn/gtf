@@ -22,7 +22,20 @@ func recovery() {
 }
 
 var GtfFuncMap = template.FuncMap{
+	"getInt": func(value interface{}) int {
+		defer recovery()
+		if value == nil {
+			return 0
+		}
+		switch value.(type) {
+		case *int:
+			return *value.(*int)
+		default:
+			return value.(int)
+		}
+	},
 	"istrue": func(value interface{}) bool {
+		defer recovery()
 		//for *bool type
 		v := value.(*bool)
 		if v == nil || *v == false {
@@ -31,6 +44,7 @@ var GtfFuncMap = template.FuncMap{
 		return true
 	},
 	"humanizeSize": func(size interface{}) string {
+		defer recovery()
 		switch v := size.(type) {
 		case float64:
 			out := uint64(int64(v))
@@ -78,9 +92,20 @@ var GtfFuncMap = template.FuncMap{
 		defer recovery()
 		return template.JS(value)
 	},
-	"existin": func(list []string, value string) bool {
+	"existin": func(list interface{}, value string) bool {
 		defer recovery()
-		for _, item := range list {
+		if list == nil {
+			return false
+		}
+		var nlist []string
+		switch list.(type) {
+		case *[]string:
+			nlist = *list.(*[]string)
+		default:
+			nlist = list.([]string)
+		}
+
+		for _, item := range nlist {
 			if item == value {
 				return true
 			}
