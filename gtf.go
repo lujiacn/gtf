@@ -22,6 +22,9 @@ func recovery() {
 }
 
 var GtfFuncMap = template.FuncMap{
+	"repeat": func(count int, str string) string {
+		return strings.Repeat(str, count)
+	},
 	"getInt": func(value interface{}) int {
 		defer recovery()
 		if value == nil {
