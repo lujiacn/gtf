@@ -13,6 +13,7 @@ import (
 
 	humanize "github.com/dustin/go-humanize"
 	"github.com/lujiacn/timeago"
+	"github.com/revel/revel"
 	"github.com/russross/blackfriday"
 )
 
@@ -22,6 +23,14 @@ func recovery() {
 }
 
 var GtfFuncMap = template.FuncMap{
+	"setQuery": func(r *revel.Request, k, v string) string {
+		link, _ := url.ParseRequestURI(r.GetRequestURI())
+		values := link.Query()
+
+		values.Set(k, v)
+		link.RawQuery = values.Encode()
+		return link.String()
+	},
 	"repeat": func(count int, str string) string {
 		return strings.Repeat(str, count)
 	},
