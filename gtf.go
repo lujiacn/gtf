@@ -23,7 +23,18 @@ func recovery() {
 }
 
 var GtfFuncMap = template.FuncMap{
+	"minus": func(value interface{}, i int) int {
+		defer recovery()
+		v := reflect.ValueOf(value)
+		switch v.Kind() {
+		case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
+			return value.(int) - 1
+		default:
+			return 0
+		}
+	},
 	"setQuery": func(r *revel.Request, k, v string) string {
+		defer recovery()
 		link, _ := url.ParseRequestURI(r.GetRequestURI())
 		values := link.Query()
 
@@ -32,6 +43,7 @@ var GtfFuncMap = template.FuncMap{
 		return link.String()
 	},
 	"repeat": func(count int, str string) string {
+		defer recovery()
 		return strings.Repeat(str, count)
 	},
 	"getInt": func(value interface{}) int {
