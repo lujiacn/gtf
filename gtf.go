@@ -28,7 +28,7 @@ var GtfFuncMap = template.FuncMap{
 		v := reflect.ValueOf(value)
 		switch v.Kind() {
 		case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
-			return value.(int) - 1
+			return value.(int) - i
 		default:
 			return 0
 		}
