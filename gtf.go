@@ -12,6 +12,7 @@ import (
 	"time"
 
 	humanize "github.com/dustin/go-humanize"
+	"github.com/globalsign/mgo/bson"
 	"github.com/lujiacn/timeago"
 	"github.com/revel/revel"
 	"github.com/russross/blackfriday"
@@ -23,6 +24,16 @@ func recovery() {
 }
 
 var GtfFuncMap = template.FuncMap{
+	"sameobjectid": func(value interface{}, id string) bool {
+		defer recovery()
+		switch value.(type) {
+		case bson.ObjectId:
+			return value.(bson.ObjectId).Hex() == id
+		default:
+			return fmt.Sprintf("%v", value) == id
+		}
+		return false
+	},
 	"minus": func(value interface{}, i int) int {
 		defer recovery()
 		v := reflect.ValueOf(value)
