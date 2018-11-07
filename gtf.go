@@ -24,6 +24,20 @@ func recovery() {
 }
 
 var GtfFuncMap = template.FuncMap{
+	"duration": func(start, stop time.Time) float64 {
+		defer recovery()
+		loading := stop.Sub(start).Seconds()
+		return loading
+	},
+	"existobjectid": func(values []bson.ObjectId, id string) bool {
+		defer recovery()
+		for _, value := range values {
+			if value.Hex() == id {
+				return true
+			}
+		}
+		return false
+	},
 	"sameobjectid": func(value interface{}, id string) bool {
 		defer recovery()
 		switch value.(type) {
