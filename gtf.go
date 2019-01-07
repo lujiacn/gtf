@@ -24,6 +24,22 @@ func recovery() {
 }
 
 var GtfFuncMap = template.FuncMap{
+	"objectId": func(value) string {
+		defer recovery()
+		switch value.(type) {
+		case bson.ObjectId:
+			return value.(bson.ObjectId).Hex()
+		default:
+			value
+		}
+		return value
+	},
+	"parseUrl": func(path string, r *revel.Request) string {
+		defer recovery()
+		link, _ := url.ParseRequestURI(r.GetRequestURI())
+		link.Path = path
+		return link.String()
+	},
 	"duration": func(start, stop time.Time) float64 {
 		defer recovery()
 		loading := stop.Sub(start).Seconds()
