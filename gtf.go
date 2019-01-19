@@ -24,6 +24,23 @@ func recovery() {
 }
 
 var GtfFuncMap = template.FuncMap{
+	"isChecked": func(values interface{}, option interface{}) string {
+		defer recovery()
+		list := []string{}
+		switch values.(type) {
+		case string:
+			return ""
+		case []string:
+			list = values.([]string)
+		}
+		//for checkbox mark check value
+		for _, item := range list {
+			if item == option.(string) {
+				return "checked"
+			}
+		}
+		return ""
+	},
 	"objectId": func(value interface{}) string {
 		defer recovery()
 		switch value.(type) {
