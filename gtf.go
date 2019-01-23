@@ -100,6 +100,12 @@ var GtfFuncMap = template.FuncMap{
 		link.RawQuery = values.Encode()
 		return link.String()
 	},
+	"getQuery": func(r *revel.Request, k string) string {
+		defer recovery()
+		link, _ := url.ParseRequestURI(r.GetRequestURI())
+		values := link.Query()
+		return values.Get(k)
+	},
 	"repeat": func(count int, str string) string {
 		defer recovery()
 		return strings.Repeat(str, count)
