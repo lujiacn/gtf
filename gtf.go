@@ -15,7 +15,7 @@ import (
 	"github.com/globalsign/mgo/bson"
 	"github.com/lujiacn/timeago"
 	"github.com/revel/revel"
-	"github.com/russross/blackfriday"
+	blackfriday "gopkg.in/russross/blackfriday.v2"
 )
 
 // recovery will silently swallow all unexpected panics.
@@ -167,7 +167,7 @@ var GtfFuncMap = template.FuncMap{
 	"markdown": func(value string) template.HTML {
 		defer recovery()
 		byteValue := []byte(value)
-		byteOutput := blackfriday.MarkdownCommon(byteValue)
+		byteOutput := blackfriday.Run(byteValue)
 
 		return template.HTML(string(byteOutput))
 	},
