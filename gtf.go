@@ -24,7 +24,12 @@ func recovery() {
 }
 
 var GtfFuncMap = template.FuncMap{
+	"funcMap": func(v ...interface{}) []interface{} {
+		defer recovery()
+		return v
+	},
 	"asURL": func(query string) template.URL {
+		defer recovery()
 		return template.URL(query)
 	},
 	"isChecked": func(values interface{}, option interface{}) string {
