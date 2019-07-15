@@ -24,6 +24,15 @@ func recovery() {
 }
 
 var GtfFuncMap = template.FuncMap{
+	"timeIn": func(t time.Time, locName string) time.Time {
+		defer recovery()
+		loc, err := time.LoadLocation(locName)
+		if err != nil {
+			return t
+		}
+		t = t.In(loc)
+		return t
+	},
 	"funcMap": func(v ...interface{}) []interface{} {
 		defer recovery()
 		return v
