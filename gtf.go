@@ -57,7 +57,6 @@ var GtfFuncMap = template.FuncMap{
 		default:
 			return value.(string)
 		}
-		return value.(string)
 	},
 	"parseUrl": func(path string, r *revel.Request) string {
 		defer recovery()
@@ -87,7 +86,6 @@ var GtfFuncMap = template.FuncMap{
 		default:
 			return fmt.Sprintf("%v", value) == id
 		}
-		return false
 	},
 	"minus": func(value interface{}, i int) int {
 		defer recovery()
