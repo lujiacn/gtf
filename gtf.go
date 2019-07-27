@@ -187,6 +187,10 @@ var GtfFuncMap = template.FuncMap{
 		defer recovery()
 		return timeago.English.Format(value)
 	},
+	"asCSS": func(value string) template.CSS {
+		defer recovery()
+		return template.CSS(value)
+	},
 	"asHTML": func(value string) template.HTML {
 		defer recovery()
 		return template.HTML(value)
