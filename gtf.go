@@ -269,6 +269,8 @@ var GtfFuncMap = template.FuncMap{
 			return v.Len()
 		case reflect.String:
 			return len([]rune(v.String()))
+		case reflect.Ptr:
+			return v.Elem().Len()
 		}
 
 		return 0
