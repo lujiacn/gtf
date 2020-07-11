@@ -13,9 +13,11 @@ import (
 
 	humanize "github.com/dustin/go-humanize"
 	"github.com/globalsign/mgo/bson"
-	"github.com/lujiacn/timeago"
 	"github.com/revel/revel"
-	blackfriday "gopkg.in/russross/blackfriday.v2"
+	"github.com/xeonx/timeago"
+
+	//blackfriday "gopkg.in/russross/blackfriday.v2"
+	blackfriday "github.com/russross/blackfriday/v2"
 )
 
 // recovery will silently swallow all unexpected panics.
