@@ -16,8 +16,8 @@ import (
 	"github.com/revel/revel"
 	"github.com/xeonx/timeago"
 
-	//blackfriday "gopkg.in/russross/blackfriday.v2"
-	blackfriday "github.com/russross/blackfriday/v2"
+	blackfriday "gopkg.in/russross/blackfriday.v2"
+	//blackfriday "github.com/russross/blackfriday/v2"
 )
 
 // recovery will silently swallow all unexpected panics.
