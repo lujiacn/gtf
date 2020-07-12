@@ -16,7 +16,7 @@ import (
 	"github.com/revel/revel"
 	"github.com/xeonx/timeago"
 
-	blackfriday "gopkg.in/russross/blackfriday.v2"
+	"github.com/gomarkdown/markdown"
 	//blackfriday "github.com/russross/blackfriday/v2"
 )
 
@@ -183,10 +183,10 @@ var GtfFuncMap = template.FuncMap{
 	},
 	"markdown": func(value string) template.HTML {
 		defer recovery()
-		byteValue := []byte(value)
-		byteOutput := blackfriday.Run(byteValue)
+		md := []byte(value)
+		output := markdown.ToHTML(md, nil, nil)
 
-		return template.HTML(string(byteOutput))
+		return template.HTML(string(output))
 	},
 	"timeago": func(value time.Time) string {
 		defer recovery()
