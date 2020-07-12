@@ -6,6 +6,7 @@ import (
 	"html/template"
 	"math"
 	"math/rand"
+	"net/http"
 	"net/url"
 	"reflect"
 	"strings"
@@ -13,7 +14,6 @@ import (
 
 	humanize "github.com/dustin/go-humanize"
 	"github.com/globalsign/mgo/bson"
-	"github.com/revel/revel"
 	"github.com/xeonx/timeago"
 
 	"github.com/gomarkdown/markdown"
@@ -72,9 +72,9 @@ var GtfFuncMap = template.FuncMap{
 			return value.(string)
 		}
 	},
-	"parseUrl": func(path string, r *revel.Request) string {
+	"parseUrl": func(path string, r *http.Request) string {
 		defer recovery()
-		link, _ := url.ParseRequestURI(r.GetRequestURI())
+		link, _ := url.ParseRequestURI(r.RequestURI)
 		link.Path = path
 		return link.String()
 	},
@@ -111,18 +111,18 @@ var GtfFuncMap = template.FuncMap{
 			return 0
 		}
 	},
-	"setQuery": func(r *revel.Request, k, v string) string {
+	"setQuery": func(r *http.Request, k, v string) string {
 		defer recovery()
-		link, _ := url.ParseRequestURI(r.GetRequestURI())
+		link, _ := url.ParseRequestURI(r.RequestURI)
 		values := link.Query()
 
 		values.Set(k, v)
 		link.RawQuery = values.Encode()
 		return link.String()
 	},
-	"getQuery": func(r *revel.Request, k string) string {
+	"getQuery": func(r *http.Request, k string) string {
 		defer recovery()
-		link, _ := url.ParseRequestURI(r.GetRequestURI())
+		link, _ := url.ParseRequestURI(r.RequestURI)
 		values := link.Query()
 		return values.Get(k)
 	},
