@@ -15,6 +15,7 @@ import (
 	humanize "github.com/dustin/go-humanize"
 	"github.com/globalsign/mgo/bson"
 	"github.com/xeonx/timeago"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 
 	"github.com/gomarkdown/markdown"
 	//blackfriday "github.com/russross/blackfriday/v2"
@@ -97,6 +98,8 @@ var GtfFuncMap = template.FuncMap{
 		switch value.(type) {
 		case bson.ObjectId:
 			return value.(bson.ObjectId).Hex() == id
+		case primitive.ObjectID:
+			return value.(primitive.ObjectID).Hex() == id
 		default:
 			return fmt.Sprintf("%v", value) == id
 		}
