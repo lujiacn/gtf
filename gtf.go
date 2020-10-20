@@ -13,7 +13,7 @@ import (
 	"time"
 
 	humanize "github.com/dustin/go-humanize"
-	"github.com/globalsign/mgo/bson"
+
 	"github.com/xeonx/timeago"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 
@@ -67,8 +67,8 @@ var GtfFuncMap = template.FuncMap{
 	"objectId": func(value interface{}) string {
 		defer recovery()
 		switch value.(type) {
-		case bson.ObjectId:
-			return value.(bson.ObjectId).Hex()
+		case primitive.ObjectID:
+			return value.(primitive.ObjectID).Hex()
 		default:
 			return value.(string)
 		}
@@ -84,7 +84,7 @@ var GtfFuncMap = template.FuncMap{
 		loading := stop.Sub(start).Seconds()
 		return loading
 	},
-	"existobjectid": func(values []bson.ObjectId, id string) bool {
+	"existobjectid": func(values []primitive.ObjectID, id string) bool {
 		defer recovery()
 		for _, value := range values {
 			if value.Hex() == id {
@@ -96,8 +96,8 @@ var GtfFuncMap = template.FuncMap{
 	"sameobjectid": func(value interface{}, id string) bool {
 		defer recovery()
 		switch value.(type) {
-		case bson.ObjectId:
-			return value.(bson.ObjectId).Hex() == id
+		case primitive.ObjectID:
+			return value.(primitive.ObjectID).Hex() == id
 		case primitive.ObjectID:
 			return value.(primitive.ObjectID).Hex() == id
 		default:
