@@ -98,8 +98,6 @@ var GtfFuncMap = template.FuncMap{
 		switch value.(type) {
 		case primitive.ObjectID:
 			return value.(primitive.ObjectID).Hex() == id
-		case primitive.ObjectID:
-			return value.(primitive.ObjectID).Hex() == id
 		default:
 			return fmt.Sprintf("%v", value) == id
 		}
