@@ -17,8 +17,7 @@ import (
 	"github.com/xeonx/timeago"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 
-	"github.com/gomarkdown/markdown"
-	//blackfriday "github.com/russross/blackfriday/v2"
+	blackfriday "github.com/russross/blackfriday/v2"
 )
 
 // recovery will silently swallow all unexpected panics.
@@ -186,8 +185,8 @@ var GtfFuncMap = template.FuncMap{
 	},
 	"markdown": func(value string) template.HTML {
 		defer recovery()
-		md := []byte(value)
-		output := markdown.ToHTML(md, nil, nil)
+
+		output := blackfriday.Run(value)
 
 		return template.HTML(string(output))
 	},
