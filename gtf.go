@@ -186,7 +186,7 @@ var GtfFuncMap = template.FuncMap{
 	"markdown": func(value string) template.HTML {
 		defer recovery()
 
-		output := blackfriday.Run(value)
+		output := blackfriday.Run([]byte(value))
 
 		return template.HTML(string(output))
 	},
