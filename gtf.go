@@ -14,6 +14,8 @@ import (
 
 	humanize "github.com/dustin/go-humanize"
 	"github.com/globalsign/mgo/bson"
+	"github.com/gomarkdown/markdown"
+	"github.com/gomarkdown/markdown/parser"
 	"github.com/xeonx/timeago"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 
@@ -182,6 +184,14 @@ var GtfFuncMap = template.FuncMap{
 		default:
 			return ""
 		}
+	},
+	"markdown2": func(value string) template.HTML {
+		extensions := parser.CommonExtensions | parser.AutoHeadingIDs
+		parser := parser.NewWithExtensions(extensions)
+
+		md := []byte(value)
+		output := markdown.ToHTML(md, parser, nil)
+		return template.HTML(output)
 	},
 	"markdown": func(value string) template.HTML {
 		defer recovery()
