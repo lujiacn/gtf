@@ -18,6 +18,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 
 	"github.com/gomarkdown/markdown"
+	"github.com/gomarkdown/markdown/parser"
 	//blackfriday "github.com/russross/blackfriday/v2"
 )
 
@@ -184,8 +185,12 @@ var GtfFuncMap = template.FuncMap{
 	},
 	"markdown": func(value string) template.HTML {
 		defer recovery()
+
+		extensions := parser.CommonExtensions | parser.AutoHeadingIDs
+		parser := parser.NewWithExtensions(extensions)
+
 		md := []byte(value)
-		output := markdown.ToHTML(md, nil, nil)
+		output := markdown.ToHTML(md, parser, nil)
 
 		return template.HTML(string(output))
 	},
