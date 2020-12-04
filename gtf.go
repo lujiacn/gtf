@@ -34,11 +34,10 @@ var GtfFuncMap = template.FuncMap{
 			locName = "Asia/Shanghai"
 		}
 		loc, err := time.LoadLocation(locName)
-		if err != nil {
-			return t.Format("2006-01-02 15:04 -0700")
+		if err == nil {
+			t = t.In(loc)
 		}
-		t = t.In(loc).Format("2006-01-02 15:04 -0700")
-		return t
+		return t.Format("2006-01-02 15:04 -0700")
 	},
 	"funcMap": func(v ...interface{}) []interface{} {
 		defer recovery()
