@@ -28,14 +28,14 @@ func recovery() {
 }
 
 var GtfFuncMap = template.FuncMap{
-	"timeIn": func(t time.Time, locName string) time.Time {
+	"timeIn": func(t time.Time, locName string) string {
 		defer recovery()
 		if locName == "" {
 			locName = "Asia/Shanghai"
 		}
 		loc, err := time.LoadLocation(locName)
 		if err != nil {
-			return t
+			return t.Format("2006-01-02 15:04 -0700")
 		}
 		t = t.In(loc).Format("2006-01-02 15:04 -0700")
 		return t
