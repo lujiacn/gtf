@@ -28,6 +28,16 @@ func recovery() {
 }
 
 var GtfFuncMap = template.FuncMap{
+	"toValue": func(value interface{}) interface{} {
+		defer recover()
+		// convert primitive.ObjectID to string
+		switch value.(type) {
+		case primitive.ObjectID:
+			return value.(primitive.ObjectID).Hex()
+		default:
+			return value
+		}
+	},
 	"timeIn": func(t time.Time, locName string) string {
 		defer recovery()
 		if locName == "" {
