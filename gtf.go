@@ -53,6 +53,12 @@ var GtfFuncMap = template.FuncMap{
 		defer recovery()
 		return v
 	},
+
+	"asQuery": func(query string) string {
+		defer recovery()
+		return url.QueryEscape(query)
+	},
+
 	"asURL": func(query string) template.URL {
 		defer recovery()
 		return template.URL(query)
